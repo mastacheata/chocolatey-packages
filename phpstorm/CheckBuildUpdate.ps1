@@ -12,8 +12,18 @@ $release = (Invoke-RestMethod -Uri 'https://data.services.jetbrains.com/products
 $newVersion = $release.PS.version
 
 # Compare versions, only proceed if new version is real smaller than old version
-if (-not ([version]$oldVersion -lt [version]$newVersion)) {
-    throw [System.InvalidOperationException] "Already up to date"
+try {
+    if (-not ([version]$oldVersion -lt [version]$newVersion)) {
+        throw [System.InvalidOperationException] "Already up to date"
+    }
+}
+catch {
+    $oldNetVersion = $oldVersion -replace "[a-zA-Z]"
+    $newNetVersion = $newVersion -replace "[a-zA-Z]"
+
+    if ($oldNetVersion -ne $newNetVersion -and $newNetVersion.Length -ge $newVersion.Length) {
+        throw [System.InvalidOperationException] "Invalid Version string"
+    }
 }
 
 # (deprecated) Download Installer and build md5sum
@@ -48,4 +58,5 @@ choco pack "$directory\phpstorm.nuspec"
 # choco push --source https://chocolatey.org/
 
 # Cleanup
+Write-Host "remove nupkg file"
 Get-ChildItem $directory -include *.nupkg -recurse | Remove-Item
