@@ -1,8 +1,8 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
     <id>phpstorm</id>
-    <version>2016.1.1</version>
+    <version>2016.3.3</version>
     <title>JetBrains PHPStorm</title>
     <authors>JetBrains s.r.o.</authors>
     <owners>Benedikt Bauer</owners>
