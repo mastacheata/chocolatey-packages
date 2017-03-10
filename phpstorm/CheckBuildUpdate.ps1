@@ -58,5 +58,5 @@ choco pack "$directory\phpstorm.nuspec"
 # choco push --source https://chocolatey.org/
 
 # Cleanup
-Write-Host "remove nupkg file"
-Get-ChildItem $directory -include *.nupkg -recurse | Remove-Item
+#Write-Host "remove nupkg file"
+#Get-ChildItem $directory -include *.nupkg -recurse | Remove-Item
