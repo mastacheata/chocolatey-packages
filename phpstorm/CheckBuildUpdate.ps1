@@ -26,6 +26,15 @@ catch {
     }
 }
 
+# Jetbrains can be a little inconsistent in their naming of document pages.
+# So we verify the release specific page actually exist where we think it should.
+$release_url = "https://confluence.jetbrains.com/display/PhpStorm/PhpStorm+$newVersion+Release+Notes"
+$download_release = Invoke-WebRequest -Uri $release_url -UseBasicParsing
+# If not fallback to a documentation page that contains a list of all release note pages.
+if($download_release.RawContent -like '*Page Not Found*') {
+    $release_url = "https://confluence.jetbrains.com/display/PhpStorm/PhpStorm+Release+Notes"
+}
+
 # (deprecated) Download Installer and build md5sum
 <#
 if (Test-Path "$directory\phpstorm.exe") { Remove-Item "$directory\phpstorm.exe" }
@@ -44,6 +53,8 @@ Write-Host "Update nuspec"
 $nuspec_template.package.metadata.version = $newVersion
 if (Test-Path "$directory\phpstorm.nuspec") { Remove-Item "$directory\phpstorm.nuspec" }
 $nuspec_template.save("$directory\phpstorm.nuspec")
+Write-Host "Update nuspec <releaseNotes> with new URL"
+(Get-Content "$directory\phpstorm.nuspec") -replace('{{release_url}}', $release_url) | Set-Content "$directory\phpstorm.nuspec"
 
 Write-Host "Update Installer Powershell script with new URL and checksum"
 if (Test-Path "$directory\tools\chocolateyInstall.ps1") { Remove-Item "$directory\tools\chocolateyInstall.ps1" }
