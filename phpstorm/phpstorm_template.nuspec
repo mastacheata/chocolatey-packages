@@ -5,7 +5,7 @@
         <version>{{version}}</version>
         <title>JetBrains PHPStorm</title>
         <authors>JetBrains s.r.o.</authors>
-        <owners>Benedikt Bauer</owners>
+        <owners>mastacheata, Spunkie, Claud, mtolmacs, VeryChocolatey</owners>
         <licenseUrl>https://www.jetbrains.com/phpstorm/buy/</licenseUrl>
         <projectUrl>https://www.jetbrains.com/phpstorm/</projectUrl>
         <iconUrl>https://raw.githubusercontent.com/mastacheata/chocolatey-packages/master/phpstorm/icon_PhpStorm.png</iconUrl>
