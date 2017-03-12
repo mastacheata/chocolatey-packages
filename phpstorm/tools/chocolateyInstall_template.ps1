@@ -1,3 +1,7 @@
+$tools = Split-Path $MyInvocation.MyCommand.Definition
+
+. $tools\helper.ps1
+
 ﻿Install-ChocolateyPackage `
   -PackageName 'phpstorm' `
   -FileType 'EXE' `

@@ -1,6 +1,6 @@
 $tools = Split-Path $MyInvocation.MyCommand.Definition
 
-. $tools\uninstall.ps1
+. $tools\helper.ps1
 
 Uninstall-ChocolateyPackage `
   -PackageName 'phpstorm' `
