@@ -3,17 +3,20 @@
     <metadata>
         <id>phpstorm</id>
         <version>{{version}}</version>
+        <packageSourceUrl>https://github.com/mastacheata/chocolatey-packages/tree/master/phpstorm</packageSourceUrl>
         <title>JetBrains PHPStorm</title>
         <authors>JetBrains s.r.o.</authors>
         <owners>mastacheata, Spunkie, Claud, mtolmacs, VeryChocolatey</owners>
         <licenseUrl>https://www.jetbrains.com/phpstorm/buy/</licenseUrl>
         <projectUrl>https://www.jetbrains.com/phpstorm/</projectUrl>
+        <docsUrl>https://www.jetbrains.com/help/phpstorm/</docsUrl>
+        <bugTrackerUrl>https://youtrack.jetbrains.com/issues/WI</bugTrackerUrl>
         <iconUrl>https://raw.githubusercontent.com/mastacheata/chocolatey-packages/master/phpstorm/icon_PhpStorm.png</iconUrl>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
-        <description>The IDE that actually GETS your code. Supports PHP 5.3, 5.4, 5.5, 5.6 &amp; 7.0 for modern and legacy projects. On the fly error prevention. Best autocompletion &amp; Code Refactoring. Zero configuration debugging. Best JavaScript support included. Frequent updates.</description>
         <summary>PHPStorm - Lightning-smart PHP IDE</summary>
-        <tags>php ide jetbrains</tags>
+        <tags>PHP HTML CSS IDE jetbrains idea PhpStorm EAP PhpStorm-EAP developer productivity code admin</tags>
         <copyright>JetBrains s.r.o.</copyright>
+        <description>The IDE that actually GETS your code. Supports PHP 5.3, 5.4, 5.5, 5.6 &amp; 7.0 for modern and legacy projects. On the fly error prevention. Best autocompletion &amp; Code Refactoring. Zero configuration debugging. Best JavaScript support included. Frequent updates.</description>
     </metadata>
     <files>
         <file src="tools\chocolateyInstall.ps1" target="tools\chocolateyInstall.ps1" />
