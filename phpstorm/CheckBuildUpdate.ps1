@@ -35,6 +35,7 @@ Write-Host "Getting new version from $download"
 $checksum = (Get-FileHash "$directory\phpstorm.exe" -Algorithm MD5).hash.ToLower()
 Write-Host "New MD5 checksum is $checksum"
 #>
+$download = $release.PS.downloads.windows.link
 
 # Use sha256 checksum from release API directly
 $checksum = ((Invoke-RestMethod -Uri $release.PS.downloads.windows.checksumLink -UseBasicParsing).Split(" "))[0]
