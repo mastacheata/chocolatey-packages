@@ -26,21 +26,13 @@ catch {
     }
 }
 
-# (deprecated) Download Installer and build md5sum
-<#
-if (Test-Path "$directory\phpstorm.exe") { Remove-Item "$directory\phpstorm.exe" }
-$download = $release.PS.downloads.windows.link
-Write-Host "Getting new version from $download"
-(New-Object System.Net.WebClient).DownloadFile($download, "$directory\phpstorm.exe")
-$checksum = (Get-FileHash "$directory\phpstorm.exe" -Algorithm MD5).hash.ToLower()
-Write-Host "New MD5 checksum is $checksum"
-#>
-
 # Use sha256 checksum from release API directly
 $checksum = ((Invoke-RestMethod -Uri $release.PS.downloads.windows.checksumLink -UseBasicParsing).Split(" "))[0]
 
 Write-Host "Update nuspec"
 [xml]$nuspec_template = (Get-Content .\phpstorm_template.nuspec)
+$versionEl = $nuspec_template.CreateElement('version');
+$nuspec_template.package.metadata.AppendChild($versionEl);
 $nuspec_template.package.metadata.version = $newVersion
 if (Test-Path "$directory\phpstorm.nuspec") { Remove-Item "$directory\phpstorm.nuspec" }
 $nuspec_template.save("$directory\phpstorm.nuspec")

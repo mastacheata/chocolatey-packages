@@ -2,7 +2,6 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
     <metadata>
         <id>phpstorm</id>
-        <version>{{version}}</version>
         <title>JetBrains PHPStorm</title>
         <authors>JetBrains s.r.o.</authors>
         <owners>Benedikt Bauer</owners>
