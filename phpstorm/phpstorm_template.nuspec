@@ -2,7 +2,6 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
     <metadata>
         <id>phpstorm</id>
-        <version>{{version}}</version>
         <title>JetBrains PHPStorm</title>
         <authors>JetBrains s.r.o.</authors>
         <owners>Benedikt Bauer</owners>
@@ -18,6 +17,6 @@
     <files>
         <file src="tools\chocolateyInstall.ps1" target="tools\chocolateyInstall.ps1" />
         <file src="tools\chocolateyUninstall.ps1" target="tools\chocolateyUninstall.ps1" />
-        <file src="tools\uninstall.ps1" target="tools\uninstall.ps1" />
+        <file src="tools\helper.ps1" target="tools\helper.ps1" />
     </files>
 </package>
