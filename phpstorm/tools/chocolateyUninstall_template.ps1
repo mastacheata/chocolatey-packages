@@ -1,9 +1,11 @@
 $tools = Split-Path $MyInvocation.MyCommand.Definition
 
-. $tools\uninstall.ps1
+. $tools\helper.ps1
 
-Uninstall-ChocolateyPackage `
-  -PackageName 'phpstorm' `
-  -FileType 'EXE' `
-  -Silent '/S' `
-  -File (Get-Uninstaller -Name 'JetBrains PhpStorm {{version}}')
+$packageArgs = @{
+  PackageName     = 'phpstorm'
+  FileType        = 'exe'
+  Silent          = '/S'
+  File (Get-Uninstaller -Name 'JetBrains PhpStorm {{version}}')
+}
+Uninstall-ChocolateyPackage @packageArgs

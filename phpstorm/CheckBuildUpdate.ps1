@@ -1,6 +1,8 @@
 # Get directory of this script
 $directory = Split-Path $MyInvocation.MyCommand.Definition
 
+. $directory\tools\helper.ps1
+
 # If nuspec exists, grab the old version number
 if (Test-Path "$directory\phpstorm.nuspec") {
     $oldVersion = ([xml](Get-Content "$directory\phpstorm.nuspec")).package.metadata.version
