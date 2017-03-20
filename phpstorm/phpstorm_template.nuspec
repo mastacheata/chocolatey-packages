@@ -14,7 +14,7 @@
         <iconUrl>https://raw.githubusercontent.com/mastacheata/chocolatey-packages/master/phpstorm/icon_PhpStorm.png</iconUrl>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <summary>PHPStorm - Lightning-smart PHP IDE</summary>
-        <tags>PHP HTML CSS IDE jetbrains idea PhpStorm EAP PhpStorm-EAP developer productivity code admin</tags>
+        <tags>PHP HTML CSS IDE jetbrains idea PhpStorm EAP PhpStorm-EAP developer productivity code admin trial</tags>
         <copyright>JetBrains s.r.o.</copyright>
         <releaseNotes>{{release_url}}</releaseNotes>
         <description># PHPStorm
