@@ -28,11 +28,20 @@ catch {
 
 # Jetbrains can be a little inconsistent in their naming of document pages.
 # So we verify the release specific page actually exist where we think it should.
-$release_url = "https://confluence.jetbrains.com/display/PhpStorm/PhpStorm+$newVersion+Release+Notes"
-$download_release = Invoke-WebRequest -Uri $release_url -UseBasicParsing
 # If not fallback to a documentation page that contains a list of all release note pages.
-if($download_release.RawContent -like '*Page Not Found*') {
-    $release_url = "https://confluence.jetbrains.com/display/PhpStorm/PhpStorm+Release+Notes"
+try {
+    Write-Host "Test version specific releaseNotes url"
+    $release_url = "https://confluence.jetbrains.com/display/PhpStorm/PhpStorm+$($newVersion)+Release+Notes"
+    $response = Invoke-WebRequest -Uri $release_url -method head
+} catch {
+    Write-Host ">>`tERROR:`t`tVersion specific releaseNotes url test failed" -foreground "red"
+    # Check for 404 status code and ignore other status codes that might be temporary only (i.e. 5xx codes)
+    if ($_.Exception.Response.StatusCode -eq 404) {
+        Write-Host ">>`t404 response`tFalling back to generic releaseNotes url" -foreground "red"
+        $release_url = "https://confluence.jetbrains.com/display/PhpStorm/PhpStorm+Release+Notes"
+    } else {
+        Write-Host "->`t$($_.Exception.Response.StatusCode) response" -foreground "red"
+    }
 }
 
 # (deprecated) Download Installer and build md5sum
