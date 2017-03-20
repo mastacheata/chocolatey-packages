@@ -57,6 +57,8 @@ Write-Host "Update nuspec"
 $versionEl = $nuspec_template.CreateElement('version');
 $nuspec_template.package.metadata.AppendChild($versionEl);
 $nuspec_template.package.metadata.version = $newVersion
+$releaseNotesEl = $nuspec_template.CreateElement('releaseNotes');
+$nuspec_template.package.metadata.AppendChild($releaseNotesEl);
 $nuspec_template.package.metadata.releaseNotes = $release_url
 if (Test-Path "$directory\phpstorm.nuspec") { Remove-Item "$directory\phpstorm.nuspec" }
 $nuspec_template.save("$directory\phpstorm.nuspec")
