@@ -54,11 +54,11 @@ $checksum = ((Invoke-RestMethod -Uri $release.PS.downloads.windows.checksumLink 
 
 Write-Host "Update nuspec"
 [xml]$nuspec_template = (Get-Content .\phpstorm_template.nuspec)
-$versionEl = $nuspec_template.CreateElement('version');
-$nuspec_template.package.metadata.AppendChild($versionEl);
+$versionEl = $nuspec_template.CreateElement('version')
+$nuspec_template.package.metadata.AppendChild($versionEl)
 $nuspec_template.package.metadata.version = $newVersion
-$releaseNotesEl = $nuspec_template.CreateElement('releaseNotes');
-$nuspec_template.package.metadata.AppendChild($releaseNotesEl);
+$releaseNotesEl = $nuspec_template.CreateElement('releaseNotes')
+$nuspec_template.package.metadata.AppendChild($releaseNotesEl)
 $nuspec_template.package.metadata.releaseNotes = $release_url
 if (Test-Path "$directory\phpstorm.nuspec") { Remove-Item "$directory\phpstorm.nuspec" }
 $nuspec_template.save("$directory\phpstorm.nuspec")
