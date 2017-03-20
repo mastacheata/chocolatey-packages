@@ -60,10 +60,9 @@ $checksum = ((Invoke-RestMethod -Uri $release.PS.downloads.windows.checksumLink 
 Write-Host "Update nuspec"
 [xml]$nuspec_template = (Get-Content .\phpstorm_template.nuspec)
 $nuspec_template.package.metadata.version = $newVersion
+$nuspec_template.package.metadata.releaseNotes = $release_url
 if (Test-Path "$directory\phpstorm.nuspec") { Remove-Item "$directory\phpstorm.nuspec" }
 $nuspec_template.save("$directory\phpstorm.nuspec")
-Write-Host "Update nuspec <releaseNotes> with new URL"
-(Get-Content "$directory\phpstorm.nuspec") -replace('{{release_url}}', $release_url) | Set-Content "$directory\phpstorm.nuspec"
 
 Write-Host "Update Installer Powershell script with new URL and checksum"
 if (Test-Path "$directory\tools\chocolateyInstall.ps1") { Remove-Item "$directory\tools\chocolateyInstall.ps1" }
