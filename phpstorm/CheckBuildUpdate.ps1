@@ -1,6 +1,8 @@
 # Get directory of this script
 $directory = Split-Path $MyInvocation.MyCommand.Definition
 
+. $directory\tools\helper.ps1
+
 # If nuspec exists, grab the old version number
 if (Test-Path "$directory\phpstorm.nuspec") {
     $oldVersion = ([xml](Get-Content "$directory\phpstorm.nuspec")).package.metadata.version
@@ -26,6 +28,27 @@ catch {
     }
 }
 
+# Jetbrains can be a little inconsistent in their naming of document pages.
+# So we verify the release specific page actually exist where we think it should.
+# If not fallback to a documentation page that contains a list of all release note pages.
+try {
+    Write-Host "Test version specific releaseNotes url"
+    $release_url = "https://confluence.jetbrains.com/display/PhpStorm/PhpStorm+$($newVersion)+Release+Notes"
+    $response = Invoke-WebRequest -Uri $release_url -method head
+} catch {
+    Write-Host ">>`tERROR:`t`tVersion specific releaseNotes url test failed" -foreground "red"
+    # Check for 404 status code and ignore other status codes that might be temporary only (i.e. 5xx codes)
+    if ($_.Exception.Response.StatusCode -eq 404) {
+        Write-Host ">>`t404 response`tFalling back to generic releaseNotes url" -foreground "red"
+        $release_url = "https://confluence.jetbrains.com/display/PhpStorm/PhpStorm+Release+Notes"
+    } else {
+        Write-Host "->`t$($_.Exception.Response.StatusCode) response" -foreground "red"
+    }
+}
+
+# Get download link from release API
+$download = $release.PS.downloads.windows.link
+
 # Use sha256 checksum from release API directly
 $checksum = ((Invoke-RestMethod -Uri $release.PS.downloads.windows.checksumLink -UseBasicParsing).Split(" "))[0]
 
@@ -34,6 +57,9 @@ Write-Host "Update nuspec"
 $versionEl = $nuspec_template.CreateElement('version');
 $nuspec_template.package.metadata.AppendChild($versionEl);
 $nuspec_template.package.metadata.version = $newVersion
+$releaseNotesEl = $nuspec_template.CreateElement('releaseNotes');
+$nuspec_template.package.metadata.AppendChild($releaseNotesEl);
+$nuspec_template.package.metadata.releaseNotes = $release_url
 if (Test-Path "$directory\phpstorm.nuspec") { Remove-Item "$directory\phpstorm.nuspec" }
 $nuspec_template.save("$directory\phpstorm.nuspec")
 
