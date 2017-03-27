@@ -5,7 +5,7 @@ $directory = Split-Path $MyInvocation.MyCommand.Definition
 
 # If nuspec exists, grab the old version number
 if (Test-Path "$directory\phpstorm.nuspec") {
-    $oldVersion = ([xml](Get-Content "$directory\phpstorm.nuspec")).package.metadata.version
+    $oldVersion = (([xml](Get-Content "$directory\phpstorm.nuspec")).package.metadata.version)
 } else {
     $oldVersion = "0.0.0"
 }
@@ -14,19 +14,21 @@ $release = (Invoke-RestMethod -Uri 'https://data.services.jetbrains.com/products
 $newVersion = $release.PS.version
 
 # Compare versions, only proceed if new version is real smaller than old version
-try {
-    if (-not ([version]$oldVersion -lt [version]$newVersion)) {
-        throw [System.InvalidOperationException] "Already up to date"
-    }
-}
-catch {
+if (-not ([version]$oldVersion -lt [version]$newVersion)) {
     $oldNetVersion = $oldVersion -replace "[a-zA-Z]"
     $newNetVersion = $newVersion -replace "[a-zA-Z]"
 
-    if ($oldNetVersion -ne $newNetVersion -and $newNetVersion.Length -ge $newVersion.Length) {
+    if (($oldNetVersion -ne $newNetVersion) -and ($newNetVersion.Length -ge $newVersion.Length)) {
         throw [System.InvalidOperationException] "Invalid Version string"
     }
+    else {
+        throw [System.InvalidOperationException] "Already up to date (old: $($oldVersion) new: $($newVersion))"
+    }
 }
+else {
+    Write-Host "Version compare: old: $($oldVersion) new: $($newVersion)"
+}
+
 
 # Jetbrains can be a little inconsistent in their naming of document pages.
 # So we verify the release specific page actually exist where we think it should.
@@ -54,11 +56,7 @@ $checksum = ((Invoke-RestMethod -Uri $release.PS.downloads.windows.checksumLink 
 
 Write-Host "Update nuspec"
 [xml]$nuspec_template = (Get-Content .\phpstorm_template.nuspec)
-$versionEl = $nuspec_template.CreateElement('version');
-$nuspec_template.package.metadata.AppendChild($versionEl);
 $nuspec_template.package.metadata.version = $newVersion
-$releaseNotesEl = $nuspec_template.CreateElement('releaseNotes');
-$nuspec_template.package.metadata.AppendChild($releaseNotesEl);
 $nuspec_template.package.metadata.releaseNotes = $release_url
 if (Test-Path "$directory\phpstorm.nuspec") { Remove-Item "$directory\phpstorm.nuspec" }
 $nuspec_template.save("$directory\phpstorm.nuspec")
@@ -72,9 +70,3 @@ if (Test-Path "$directory\tools\chocolateyUninstall.ps1") { Remove-Item "$direct
 
 # Pack Nupkg file
 choco pack "$directory\phpstorm.nuspec"
-# Submit to chocolatey.org Community Repository
-# choco push --source https://chocolatey.org/
-
-# Cleanup
-#Write-Host "remove nupkg file"
-#Get-ChildItem $directory -include *.nupkg -recurse | Remove-Item
