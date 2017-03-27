@@ -56,11 +56,11 @@ Perform many routine tasks right from the IDE with support for Vagrant support, 
 
 [MORE ABOUT DEVELOPMENT ENVIRONMENT](//jetbrains.com/phpstorm/features/development_environment.html)
 ___
-&gt; #### _Maintainer Notes_
-&gt; _PhpStorm EAP builds are available using the_ **`--prerelease`** _flag_
-&gt; ```
-&gt; choco install phpstorm --prerelease
-&gt; ```</description>
+#### _Maintainer Notes_
+_PhpStorm EAP builds are available using the_ **`--prerelease`** _flag_
+
+    choco install phpstorm --prerelease
+</description>
     </metadata>
     <files>
         <file src="tools\chocolateyInstall.ps1" target="tools\chocolateyInstall.ps1" />
