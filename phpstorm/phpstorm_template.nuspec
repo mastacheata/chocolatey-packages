@@ -16,7 +16,7 @@
         <summary>PHPStorm - Lightning-smart PHP IDE</summary>
         <tags>PHP HTML CSS IDE jetbrains idea PhpStorm EAP PhpStorm-EAP developer productivity code admin trial</tags>
         <copyright>JetBrains s.r.o.</copyright>
-        <releaseNotes>{{release_url}}</releaseNotes>
+        <releaseNotes>{{releaseNotes}}</releaseNotes>
         <description># PHPStorm
 PhpStorm is built on top of the open-source IntelliJ Platform, which we've been developing and perfecting for over 15 years. Enjoy the fine-tuned, highly customizable experience it provides to fit your development workflow.
 # FEATURES
