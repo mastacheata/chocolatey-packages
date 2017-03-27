@@ -70,3 +70,5 @@ if (Test-Path "$directory\tools\chocolateyUninstall.ps1") { Remove-Item "$direct
 
 # Pack Nupkg file
 choco pack "$directory\phpstorm.nuspec"
+
+$env:PHPSTORM_VERSION=$newVersion
