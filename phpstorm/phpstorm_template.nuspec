@@ -58,8 +58,9 @@ Perform many routine tasks right from the IDE with support for Vagrant support, 
 ___
 #### _Maintainer Notes_
 _PhpStorm EAP builds are available using the_ **`--prerelease`** _flag_
-
-    choco install phpstorm --prerelease
+```
+choco install phpstorm --prerelease
+```
 </description>
     </metadata>
     <files>
