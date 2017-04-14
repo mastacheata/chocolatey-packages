@@ -26,12 +26,20 @@ if (-not ([version]$oldVersion -lt [version]$newVersion)) {
     }
 }
 else {
-    if ((Get-Date -date $release.PS.date) -ne (Get-Date -Hour 0 -Minute 0 -Second 0 -Millisecond 0)) {
-        throw [System.InvalidOperationException] "Version release date ($($release.PS.date)) isn't new ($(Get-Date))"
+    # If the version appears new to us, but is already on chocolatey.org, ignore it
+    try {
+        Invoke-WebRequest -Uri iwr https://chocolatey.org/packages/phpstorm/$($release.PS.version)
+        throw [System.InvalidOperationException] "Version $($relase.PS.version) already pushed to chocolatey.org"
     }
-    else {
+    catch {}
+
+    # Date comparison is too shaky to rely on, so disable it
+    # if ((Get-Date -date $release.PS.date) -ne (Get-Date -Hour 0 -Minute 0 -Second 0 -Millisecond 0)) {
+    #     throw [System.InvalidOperationException] "Version release date ($($release.PS.date)) isn't new ($(Get-Date))"
+    # }
+    # else {
         Write-Host "Version compare: old: $($oldVersion) new: $($newVersion)"
-    }
+    # }
 }
 
 
