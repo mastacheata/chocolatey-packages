@@ -26,7 +26,12 @@ if (-not ([version]$oldVersion -lt [version]$newVersion)) {
     }
 }
 else {
-    Write-Host "Version compare: old: $($oldVersion) new: $($newVersion)"
+    if ((Get-Date -date $release.PS.date) -ne (Get-Date -Hour 0 -Minute 0 -Second 0 -Millisecond 0)) {
+        throw [System.InvalidOperationException] "Version release date ($($release.PS.date)) isn't new ($(Get-Date))"
+    }
+    else {
+        Write-Host "Version compare: old: $($oldVersion) new: $($newVersion)"
+    }
 }
 
 
