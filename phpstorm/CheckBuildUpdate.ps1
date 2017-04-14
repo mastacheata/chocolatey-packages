@@ -28,7 +28,7 @@ if (-not ([version]$oldVersion -lt [version]$newVersion)) {
 else {
     # If the version appears new to us, but is already on chocolatey.org, ignore it
     try {
-        Invoke-WebRequest -Uri iwr https://chocolatey.org/packages/phpstorm/$($release.PS.version)
+        Invoke-WebRequest -Uri https://chocolatey.org/packages/phpstorm/$($release.PS.version) | out-null
         throw [System.InvalidOperationException] "Version $($relase.PS.version) already pushed to chocolatey.org"
     }
     catch {}
