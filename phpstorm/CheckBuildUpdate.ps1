@@ -28,10 +28,15 @@ if (-not ([version]$oldVersion -lt [version]$newVersion)) {
 else {
     # If the version appears new to us, but is already on chocolatey.org, ignore it
     try {
-        Invoke-WebRequest -Uri https://chocolatey.org/packages/phpstorm/$($release.PS.version) | out-null
-        throw [System.InvalidOperationException] "Version $($relase.PS.version) already pushed to chocolatey.org"
+        Write-Host "Check if Version is already released on chocolatey.org"
+        Invoke-WebRequest -Uri https://chocolatey.org/packages/phpstorm/$($newVersion) | out-null
+        throw [System.InvalidOperationException] "Version $($newVersion) already pushed to chocolatey.org"
     }
-    catch {}
+    catch {
+        if ($_.Exception.getType().FullName -eq "System.InvalidOperationException") {
+            throw [System.InvalidOperationException] "Version $($newVersion) already pushed to chocolatey.org"
+        }
+    }
 
     # Date comparison is too shaky to rely on, so disable it
     # if ((Get-Date -date $release.PS.date) -ne (Get-Date -Hour 0 -Minute 0 -Second 0 -Millisecond 0)) {
