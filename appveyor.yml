@@ -12,6 +12,7 @@ install:
     iwr https://chocolatey.org/install.ps1 -UseBasicParsing | iex
 
     cd phpstorm
+cache: phpstorm/phpstorm.nuspec
 build_script:
 - ps: ./CheckBuildUpdate.ps1
 artifacts:
