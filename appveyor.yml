@@ -9,7 +9,7 @@ environment:
 install:
 - ps: iwr https://chocolatey.org/install.ps1 -UseBasicParsing | iex
 cache:
-- '*.nuspec'
+- 'C:\projects\chocolatey-packages\phpstorm.nuspec'
 build_script:
 - ps: ./CheckBuildUpdate.ps1
 deploy_script:

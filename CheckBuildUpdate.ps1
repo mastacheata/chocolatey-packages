@@ -5,8 +5,10 @@ $directory = Split-Path $MyInvocation.MyCommand.Definition
 
 # If nuspec exists, grab the old version number
 if (Test-Path "$directory\phpstorm.nuspec") {
+    Write-Host "Found cached phpstorm.nuspec"
     $oldVersion = (([xml](Get-Content "$directory\phpstorm.nuspec")).package.metadata.version)
 } else {
+    Write-Host "Didn't find cached phpstorm.nuspec"
     $oldVersion = "0.0.0"
 }
 # Get new version number from release API
@@ -30,12 +32,11 @@ else {
     try {
         Write-Host "Check if Version is already released on chocolatey.org"
         Invoke-WebRequest -Uri https://chocolatey.org/packages/phpstorm/$($newVersion) | out-null
-        throw [System.InvalidOperationException] "Version $($newVersion) already pushed to chocolatey.org"
+        # If we get to this point, the webrequest didn't fail and this version already exists on chocolatey.org
+        Write-Error "Version $($newVersion) already pushed to chocolatey.org"
+        Exit
     }
     catch {
-        if ($_.Exception.getType().FullName -eq "System.InvalidOperationException") {
-            throw [System.InvalidOperationException] "Version $($newVersion) already pushed to chocolatey.org"
-        }
     }
 
     # Date comparison is too shaky to rely on, so disable it
