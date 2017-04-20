@@ -8,7 +8,7 @@ if (Test-Path "$directory\phpstorm.nuspec") {
     Write-Host "Found cached phpstorm.nuspec"
     $oldVersion = (([xml](Get-Content "$directory\phpstorm.nuspec")).package.metadata.version)
 } else {
-    Write-Host "Didn't find cached phpstorm.nuspec"
+    Write-Host "Couldn't find cached phpstorm.nuspec at $directory\phpstorm.nuspec"
     $oldVersion = "0.0.0"
 }
 # Get new version number from release API
