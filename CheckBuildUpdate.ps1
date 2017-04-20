@@ -28,6 +28,7 @@ if (-not ([version]$oldVersion -lt [version]$newVersion)) {
     }
 }
 else {
+    Write-Host "Cached phpstorm.nuspec not found or vweb ersion differs from cache"
     # If the version appears new to us, but is already on chocolatey.org, ignore it
     try {
         Write-Host "Check if Version is already released on chocolatey.org"
