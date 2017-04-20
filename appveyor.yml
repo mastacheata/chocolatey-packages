@@ -9,7 +9,7 @@ environment:
 install:
 - ps: iwr https://chocolatey.org/install.ps1 -UseBasicParsing | iex
 cache:
-- 'C:\projects\chocolatey-packages\phpstorm.nuspec'
+- 'phpstorm.nuspec'
 build_script:
 - ps: ./CheckBuildUpdate.ps1
 deploy_script:
@@ -17,3 +17,11 @@ deploy_script:
     choco apiKey -k $env:CHOCO_API_KEY -source https://chocolatey.org/
 
     choco push --source https://chocolatey.org/
+notifications:
+- provider: Email
+  to:
+  - mastacheata+appveyor@gmail.com
+  subject: 'PHPStorm Choco: Build status changed'
+  on_build_success: false
+  on_build_failure: false
+  on_build_status_changed: true
