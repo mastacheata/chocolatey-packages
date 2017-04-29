@@ -3,7 +3,7 @@
     <metadata>
         <id>phpstorm</id>
         <version>{{version}}</version>
-        <packageSourceUrl>https://github.com/mastacheata/chocolatey-packages/tree/master/phpstorm</packageSourceUrl>
+        <packageSourceUrl>https://github.com/mastacheata/chocolatey-phpstorm/tree/master/phpstorm</packageSourceUrl>
         <title>JetBrains PHPStorm</title>
         <authors>JetBrains s.r.o.</authors>
         <owners>mastacheata, Spunkie, Claud, mtolmacs, VeryChocolatey</owners>
