@@ -1,0 +1,27 @@
+version: 1.0.{build}
+branches:
+  only:
+  - master
+image: Visual Studio 2015
+environment:
+  CHOCO_API_KEY:
+    secure: wymwhjU6LU5AgBa0SME+b8Q6pbwS9s2R/uo8g8sZYHhFXGHh5ztKCAZAIHBxljym
+install:
+- ps: iwr https://chocolatey.org/install.ps1 -UseBasicParsing | iex
+cache:
+- 'phpstorm.nuspec'
+build_script:
+- ps: ./CheckBuildUpdate.ps1
+deploy_script:
+- ps: >-
+    choco apiKey -k $env:CHOCO_API_KEY -source https://chocolatey.org/
+
+    choco push --source https://chocolatey.org/
+notifications:
+- provider: Email
+  to:
+  - mastacheata+appveyor@gmail.com
+  subject: 'PHPStorm Choco: Build status changed'
+  on_build_success: false
+  on_build_failure: false
+  on_build_status_changed: true
