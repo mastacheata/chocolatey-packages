@@ -1,3 +1,11 @@
+param (
+    [switch]$force = $false
+)
+
+if ($force) {
+    Write-Host "Force update, will perform checks but ignore the result"
+}
+
 # Get directory of this script
 $directory = Split-Path $MyInvocation.MyCommand.Definition
 
@@ -15,8 +23,24 @@ if (Test-Path "$directory\phpstorm.nuspec") {
 $release = (Invoke-RestMethod -Uri 'https://data.services.jetbrains.com/products/releases?code=PS&latest=true&type=release' -UseBasicParsing)
 $newVersion = $release.PS.version
 
+Write-Host "Version compare: old: $($oldVersion) new: $($newVersion)"
 # Compare versions, only proceed if new version is real smaller than old version
-if (-not ([version]$oldVersion -lt [version]$newVersion)) {
+if (([version]$oldVersion -lt [version]$newVersion) -or $force) {
+    Write-Host "Cached phpstorm.nuspec not found or web version differs from cache"
+    # If the version appears new to us, but is already on chocolatey.org, ignore it
+    try {
+        Write-Host "Check if Version is already released on chocolatey.org"
+        Invoke-WebRequest -Uri https://chocolatey.org/packages/phpstorm/$($newVersion) | out-null
+        # If we get to this point, the webrequest didn't fail and this version already exists on chocolatey.org
+        Write-Error "Version $($newVersion) already pushed to chocolatey.org"
+        if (-not $force) {
+            Exit
+        }
+    }
+    catch {
+    }    
+}
+else {
     $oldNetVersion = $oldVersion -replace "[a-zA-Z]"
     $newNetVersion = $newVersion -replace "[a-zA-Z]"
 
@@ -26,27 +50,6 @@ if (-not ([version]$oldVersion -lt [version]$newVersion)) {
     else {
         throw [System.InvalidOperationException] "Already up to date (old: $($oldVersion) new: $($newVersion))"
     }
-}
-else {
-    Write-Host "Cached phpstorm.nuspec not found or vweb ersion differs from cache"
-    # If the version appears new to us, but is already on chocolatey.org, ignore it
-    try {
-        Write-Host "Check if Version is already released on chocolatey.org"
-        Invoke-WebRequest -Uri https://chocolatey.org/packages/phpstorm/$($newVersion) | out-null
-        # If we get to this point, the webrequest didn't fail and this version already exists on chocolatey.org
-        Write-Error "Version $($newVersion) already pushed to chocolatey.org"
-        Exit
-    }
-    catch {
-    }
-
-    # Date comparison is too shaky to rely on, so disable it
-    # if ((Get-Date -date $release.PS.date) -ne (Get-Date -Hour 0 -Minute 0 -Second 0 -Millisecond 0)) {
-    #     throw [System.InvalidOperationException] "Version release date ($($release.PS.date)) isn't new ($(Get-Date))"
-    # }
-    # else {
-        Write-Host "Version compare: old: $($oldVersion) new: $($newVersion)"
-    # }
 }
 
 
