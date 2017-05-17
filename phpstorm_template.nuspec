@@ -3,7 +3,7 @@
     <metadata>
         <id>phpstorm</id>
         <version>{{version}}</version>
-        <packageSourceUrl>https://github.com/mastacheata/chocolatey-packages/tree/master/phpstorm</packageSourceUrl>
+        <packageSourceUrl>https://github.com/mastacheata/chocolatey-phpstorm/tree/master/phpstorm</packageSourceUrl>
         <title>JetBrains PHPStorm</title>
         <authors>JetBrains s.r.o.</authors>
         <owners>mastacheata, Spunkie, Claud, mtolmacs, VeryChocolatey</owners>
@@ -11,7 +11,7 @@
         <projectUrl>https://www.jetbrains.com/phpstorm/</projectUrl>
         <docsUrl>https://www.jetbrains.com/help/phpstorm/</docsUrl>
         <bugTrackerUrl>https://youtrack.jetbrains.com/issues/WI</bugTrackerUrl>
-        <iconUrl>https://raw.githubusercontent.com/mastacheata/chocolatey-packages/master/phpstorm/icon_PhpStorm.png</iconUrl>
+        <iconUrl>https://raw.githubusercontent.com/mastacheata/chocolatey-phpstorm/master/icon_PhpStorm.png</iconUrl>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <summary>PHPStorm - Lightning-smart PHP IDE</summary>
         <tags>PHP HTML CSS IDE jetbrains idea PhpStorm EAP PhpStorm-EAP developer productivity code admin trial</tags>
