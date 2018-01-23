@@ -2,5 +2,6 @@
 *.zip
 *.exe
 phpstorm.nuspec
+rubymine.nuspec
 chocolateyInstall.ps1
 chocolateyUninstall.ps1
