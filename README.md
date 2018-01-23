@@ -1,6 +1,8 @@
 # chocolatey-packages/docs
 Chocolatey.org Package auto-updater for Jetbrains IDEA based IDEs
 
+Note: The actual files for the build process are in separate branches.
+
 # Structure (bold files need to be changed for new IDEs)
 * __CheckBuildUpdate.ps1__ - Check for updates, replace markers in template files, pack the NUPKG
 * __template.nuspec__ - Metadata / ToC file for the package (template markers are replaced and $product$.nuspec [i.e.: phpstorm.nuspec] is generated)
