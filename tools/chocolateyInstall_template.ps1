@@ -3,7 +3,7 @@ $tools = Split-Path $MyInvocation.MyCommand.Definition
 . $tools\helper.ps1
 
 $packageArgs = @{
-  PackageName     = 'phpstorm'
+  PackageName     = 'rubymine'
   FileType        = 'exe'
   Silent          = '/S'
   ChecksumType    = 'sha256'

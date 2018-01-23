@@ -1,7 +1,7 @@
 version: 1.0.{build}
 branches:
   only:
-  - phpstorm
+  - rubymine
 image: Visual Studio 2015
 environment:
   CHOCO_API_KEY:
@@ -9,7 +9,7 @@ environment:
 install:
 - ps: iwr https://chocolatey.org/install.ps1 -UseBasicParsing | iex
 cache:
-- 'phpstorm.nuspec'
+- 'rubymine.nuspec'
 build_script:
 - ps: ./CheckBuildUpdate.ps1
 deploy_script:
@@ -21,7 +21,7 @@ notifications:
 - provider: Email
   to:
   - mastacheata+appveyor@gmail.com
-  subject: 'PHPStorm Choco: Build status changed'
+  subject: 'RubyMine Choco: Build status changed'
   on_build_success: false
   on_build_failure: false
   on_build_status_changed: true
