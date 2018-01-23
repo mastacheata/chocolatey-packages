@@ -78,7 +78,7 @@ $download = $release.PS.downloads.windows.link
 $checksum = ((Invoke-RestMethod -Uri $release.PS.downloads.windows.checksumLink -UseBasicParsing).Split(" "))[0]
 
 Write-Host "Update nuspec"
-[xml]$nuspec_template = (Get-Content .\phpstorm_template.nuspec)
+[xml]$nuspec_template = (Get-Content .\template.nuspec)
 $nuspec_template.package.metadata.version = $newVersion
 $nuspec_template.package.metadata.releaseNotes = $release_url
 if (Test-Path "$directory\phpstorm.nuspec") { Remove-Item "$directory\phpstorm.nuspec" }
