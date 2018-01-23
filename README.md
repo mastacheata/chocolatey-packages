@@ -28,7 +28,7 @@ Note: The actual files for the build process are in separate branches.
 
 1.2.4. Change the PS (PhpStorm) code against whatever code you found out in the last step (Here: CL for Clion)
 
-1.3. Replace the code from 1.2 in the variables that are filled from JSON path queries (i.e.: ll 24,75,78)
+1.3. Replace the code from 1.2 in the variables that are filled from JSON path queries (i.e.: Lines 24,75,78)
 
 1.4. (optional) sometimes you might need the majorVersion to build some of the other URLs, add a new line after the newVersion variable declaration ```$majorVersion = $release.PS.majorVersion``` (remember to replace the Application Code again)
 
