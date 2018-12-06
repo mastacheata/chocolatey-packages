@@ -5,7 +5,7 @@ $tools = Split-Path $MyInvocation.MyCommand.Definition
 $packageArgs = @{
   PackageName     = 'phpstorm'
   FileType        = 'exe'
-  Silent          = '/S'
+  Silent          = '/S /CONFIG=$tools\silent.config'
   ChecksumType    = 'sha256'
   Checksum        = '{{checksum}}'
   Url             = '{{download}}'
