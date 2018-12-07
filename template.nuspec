@@ -67,5 +67,6 @@ choco install phpstorm --prerelease
         <file src="tools\chocolateyInstall.ps1" target="tools\chocolateyInstall.ps1" />
         <file src="tools\chocolateyUninstall.ps1" target="tools\chocolateyUninstall.ps1" />
         <file src="tools\helper.ps1" target="tools\helper.ps1" />
+        <file src="tools\silent.config" target="tools\silent.config" />
     </files>
 </package>
