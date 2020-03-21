@@ -18,20 +18,17 @@
         <copyright>JetBrains s.r.o.</copyright>
         <releaseNotes>{{releaseNotes}}</releaseNotes>
         <description># RubyMine
-##RubyMine – the Best IDE for…
+## RubyMine – the Best IDE for…
 # FEATURES
 ## Ruby Development
 JetBrains RubyMine IDE includes a comprehensive Ruby code editor aware of dynamic language specifics. It provides smart coding assistance, intelligent code refactoring, and deep code analysis capabilities. With easy project configuration, automatic Ruby Gems management, Rake support, and built-in consoles, it has everything a Ruby developer needs in a development environment.
-[MORE ABOUT RUBY DEVELOPMENT](//www.jetbrains.com/ruby/features/ruby_ide.html)
+[MORE ABOUT RUBY DEVELOPMENT](https://www.jetbrains.com/ruby/features/ruby_ide.html)
 ## Ruby on Rails
 RubyMine brings dedicated RoR features including project structure views, quick Model-View-Controller navigation options, Rails-specific code completion, intention actions, and automated refactorings. All this, plus best-of-breed support for ERB, HAML and Slim editing, coupled with advanced web development tools and a built-in Rails console, is the best recipe for producing cutting-edge Web applications. 
-[MORE ABOUT RUBY ON RAILS](//www.jetbrains.com/ruby/features/ruby_rails.html)
+[MORE ABOUT RUBY ON RAILS](https://www.jetbrains.com/ruby/features/ruby_rails.html)
 ## JavaScript &amp; HTML/CSS
 Speed and efficiency are guaranteed for your client-side and server-side development in JavaScript, CoffeeScript, TypeScript, HTML, CSS, Less or Sass, as RubyMine provides best-in-class coding assistance and a wide range of advanced features. Node.js, Dart, AngularJS and JavaScript testing frameworks are supported via free plugins. Enhance and streamline your debugging experience without leaving the IDE, thanks to JavaScript and Node.js debugging tools. 
-[MORE ABOUT JAVASCRIPT &amp; HTML](//www.jetbrains.com/webstorm/features?from_ruby)
-## RubyMotion
-RubyMine brings all the essential productivity boosters to the world of RubyMotion apps. Code insight is available for Ruby, Objective-C and Java APIs, making iOS, macOS and Android development with RubyMotion even more pleasant. With a powerful testing and debugging UI, working either with a simulator or a real device, it is much easier to fine-tune your application code. All Rake commands and an interactive console are at your disposal as well. 
-[MORE ABOUT RUBYMOTION](//www.jetbrains.com/ruby/rubymotion/index.html)
+[MORE ABOUT JAVASCRIPT &amp; HTML](https://www.jetbrains.com/webstorm/features?from_ruby)
 </description>
     </metadata>
     <files>
