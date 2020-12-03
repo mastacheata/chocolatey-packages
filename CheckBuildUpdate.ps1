@@ -12,21 +12,39 @@ $directory = Split-Path $MyInvocation.MyCommand.Definition
 . $directory\tools\helper.ps1
 
 # If nuspec exists, grab the old version number
-if (Test-Path "$directory\phpstorm.nuspec") {
-    Write-Host "Found cached phpstorm.nuspec"
-    $oldVersion = (([xml](Get-Content "$directory\phpstorm.nuspec")).package.metadata.version)
+if (Test-Path "$directory\phpstorm-eap.nuspec") {
+    Write-Host "Found cached phpstorm-eap.nuspec"
+    $oldVersion = (([xml](Get-Content "$directory\phpstorm-eap.nuspec")).package.metadata.version)
+    $versions = $oldVersion -Split '-EAP'
+    if ($versions.Length -gt 1) {
+        $oldBuild = $versions[1] -replace('-', '.')
+        $oldEap = $true
+    }
+    else {
+        $oldBuild = $oldVersion
+        $oldEap = $false
+    }
 } else {
-    Write-Host "Couldn't find cached phpstorm.nuspec at $directory\phpstorm.nuspec"
-    $oldVersion = "0.0.0"
+    Write-Host "Couldn't find cached phpstorm-eap.nuspec at $directory\phpstorm-eap.nuspec"
+    $oldBuild = "0.0.0"
 }
 # Get new version number from release API
-$release = (Invoke-RestMethod -Uri 'https://data.services.jetbrains.com/products/releases?code=PS&latest=true&type=release' -UseBasicParsing)
-$newVersion = $release.PS.version
+$release = (Invoke-RestMethod -Uri 'https://data.services.jetbrains.com/products/releases?code=PS&latest=true&type=eap' -UseBasicParsing)
+$isEap = $release.PS.type -eq 'eap'
+if ($release.PS.type -eq 'eap') {
+    $newVersion = "$($release.PS.version)-EAP$($release.PS.build -replace('\.', '-'))"
+    $newBuild = $release.PS.build
+}
+else {
+    $newVersion = $release.PS.version
+    $newBuild = $release.PS.version
+}
 
-Write-Host "Version compare: old: $($oldVersion) new: $($newVersion)"
+
+Write-Host "Version compare: old: $($oldBuild) new: $($newBuild)"
 # Compare versions, only proceed if new version is real smaller than old version
-if (([version]$oldVersion -lt [version]$newVersion) -or $force) {
-    Write-Host "Cached phpstorm.nuspec not found or web version differs from cache"
+if (([version]$oldBuild -lt [version]$newBuild) -or $force -or ($oldEap -ne $isEap)) {
+    Write-Host "Cached phpstorm-eap.nuspec not found or web version differs from cache"
     # If the version appears new to us, but is already on chocolatey.org, ignore it
     try {
         Write-Host "Check if Version is already released on chocolatey.org"
@@ -58,7 +76,7 @@ else {
 # If not fallback to a documentation page that contains a list of all release note pages.
 try {
     Write-Host "Test version specific releaseNotes url"
-    $release_url = "https://confluence.jetbrains.com/display/PhpStorm/PhpStorm+$($newVersion)+Release+Notes"
+    $release_url = $release.PS.notesLink
     $response = Invoke-WebRequest -Uri $release_url -method head
 } catch {
     Write-Host ">>`tERROR:`t`tVersion specific releaseNotes url test failed" -foreground "red"
@@ -81,8 +99,9 @@ Write-Host "Update nuspec"
 [xml]$nuspec_template = (Get-Content .\template.nuspec)
 $nuspec_template.package.metadata.version = $newVersion
 $nuspec_template.package.metadata.releaseNotes = $release_url
-if (Test-Path "$directory\phpstorm.nuspec") { Remove-Item "$directory\phpstorm.nuspec" }
-$nuspec_template.save("$directory\phpstorm.nuspec")
+$nuspec_template.package.metadata.description = $nuspec_template.package.metadata.description -replace ('{{release}}', $release.PS.whatsnew)
+if (Test-Path "$directory\phpstorm-eap.nuspec") { Remove-Item "$directory\phpstorm-eap.nuspec" }
+$nuspec_template.save("$directory\phpstorm-eap.nuspec")
 
 Write-Host "Update Installer Powershell script with new URL and checksum"
 if (Test-Path "$directory\tools\chocolateyInstall.ps1") { Remove-Item "$directory\tools\chocolateyInstall.ps1" }
@@ -92,6 +111,6 @@ if (Test-Path "$directory\tools\chocolateyUninstall.ps1") { Remove-Item "$direct
 (Get-Content "$directory\tools\chocolateyUninstall_template.ps1") -replace('{{version}}', $newVersion) | Set-Content "$directory\tools\chocolateyUninstall.ps1"
 
 # Pack Nupkg file
-choco pack "$directory\phpstorm.nuspec"
+choco pack "$directory\phpstorm-eap.nuspec"
 
 $env:PHPSTORM_VERSION=$newVersion
