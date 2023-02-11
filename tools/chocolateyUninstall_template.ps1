@@ -6,6 +6,6 @@ $packageArgs = @{
   PackageName     = 'rubymine'
   FileType        = 'exe'
   Silent          = '/S'
-  File            = (Get-Uninstaller -Name 'JetBrains RubyMine {{version}}')
+  File            = (Get-Uninstaller -Name 'RubyMine {{version}}')
 }
 Uninstall-ChocolateyPackage @packageArgs
